@@ -64,38 +64,6 @@ exports.getDoctorAvailability = async (req, res) => {
     }
 };
 
-// Update doctor's availability
-exports.updateDoctorAvailability = async (req, res) => {
-    const { availabilityId } = req.params;  // availabilityId is passed as a URL parameter
-    const { date, startTime, endTime } = req.body;
-
-    try {
-        const availability = await DoctorAvailability.findByPk(availabilityId);
-
-        if (!availability) {
-            return res.status(404).json({ error: 'Availability not found' });
-        }
-
-        // Ensure start time is before end time
-        const startDateTime = new Date(`${date}T${startTime}:00`);
-        const endDateTime = new Date(`${date}T${endTime}:00`);
-
-        if (startDateTime >= endDateTime) {
-            return res.status(400).json({ error: 'Start time must be before end time.' });
-        }
-
-        // Update the availability slot
-        availability.date = date;
-        availability.startTime = startTime;
-        availability.endTime = endTime;
-        await availability.save();
-
-        res.json({ message: 'Availability updated successfully', availability });
-    } catch (error) {
-        console.error('Error updating doctor availability:', error);
-        res.status(500).json({ error: 'Failed to update doctor availability. Please try again later.' });
-    }
-};
 
 // Delete doctor's availability
 exports.deleteDoctorAvailability = async (req, res) => {

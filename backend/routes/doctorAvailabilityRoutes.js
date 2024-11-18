@@ -16,9 +16,6 @@ router.post('/doctor/availability', authMiddleware, checkRole(['doctor']), creat
 // Route to get all availability for a specific doctor
 router.get('/doctors/:doctorId/availability', getDoctorAvailability);
 
-// Route to update a specific availability slot for a doctor
-router.put('/doctor/availability/:availabilityId', authMiddleware, checkRole(['doctor']), updateDoctorAvailability);
-
 // Route to delete a specific availability slot for a doctor
 router.delete('/doctor/availability/:availabilityId', authMiddleware, checkRole(['doctor']), deleteDoctorAvailability);
 
